@@ -1,0 +1,8 @@
+----------------------
+start: Sun 28 Dec 2014 11:19:24 AM EST
+
+filtering working and stuff
+
+end: Sun 28 Dec 2014 12:21:18 PM EST
+----------------------
+
