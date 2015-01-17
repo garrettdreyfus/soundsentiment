@@ -3,12 +3,6 @@
    (:gen-class)
   (:import [uk.ac.wlv.sentistrength SentiStrength] ))
 
-(def analyzer (new uk.ac.wlv.sentistrength.SentiStrength (into-array ["sentidata" "./src/sentistrength/" "text" "initialize+this+string"] )))
-(defn scoreComment
-  [comment]
-   (str/split (.computeSentimentScores analyzer comment #"\s"))
-)
-
 (def settings {:client-id "86d37185f1e5dcdb022276e7f9801ac3" :client-secret "3089b64302a442d9667b2e63368541b3"})
 
 (defn get-attrs

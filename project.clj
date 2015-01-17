@@ -13,7 +13,6 @@
   ]
   :plugins [
             [lein-localrepo "0.4.0"]
-            [lein-light "0.0.4"]
             ]
 
   :main sciencefair.core
