@@ -2,18 +2,19 @@
   (:require [clj-http.client :as client]
             [cheshire.core :refer :all]
             [clojure.string :as str]
-            [clojure.string :refer [join]])
-  (:import [com.soundcloud.api ApiWrapper Env Request Endpoints Params$Track Http]))
+            [clojure.string :refer [join]]
+            )
+  (:import [com.soundcloud.api ApiWrapper Env Request Endpoints Params$Track Http] ))
 
 ;; Helper function for getting an oauth token
 (defn get-auth-token [settings]
-  (let [parse-token (fn [token] 
+  (let [parse-token (fn [token]
                       (str/replace (str/replace token #"(^[^\']*)+." "") #"'.*" ""))]
-    (assoc 
+    (assoc
       settings
       :token
-      (parse-token (.login 
-                     (ApiWrapper. (:client-id settings) (:client-secret settings) nil nil) 
+      (parse-token (.login
+                     (ApiWrapper. (:client-id settings) (:client-secret settings) nil nil)
                      (:username settings) (:password settings) (into-array String []))))))
 
 
@@ -22,22 +23,21 @@
     (client/get (str "https://api.soundcloud.com" route ".json") {:query-params params} )
     (:body)
     (parse-string true)))
-      
-(defn tracks 
+(defn tracks
   ([settings params]
    (soundcloud "/tracks" (merge params {"client_id" (:client-id settings)}) ))
-  ([settings params & args] 
+  ([settings params & args]
    (soundcloud (str "/tracks/" (join "/" args)) (merge params {"client_id" (:client-id settings)}) )))
 
-(defn users 
+(defn users
   ([settings & args]
      (soundcloud (str "/users/" (join "/" args)) {"client_id" (:client-id settings)} )))
 
-(defn playlists 
+(defn playlists
   ([settings & args]
      (soundcloud (str "/playlists/" (join "/" args)) {"client_id" (:client-id settings)} )))
 
-(defn me 
+(defn me
   ([settings]
     (soundcloud "/me" {"oauth_token" (:token settings)} ))
   ([settings & args]
@@ -46,7 +46,7 @@
 (defn search-users [settings query]
    (soundcloud "/users" (merge {"client_id" (:client-id settings)} query) ))
 
-(defn get-user-id 
+(defn get-user-id
   "Get user id of current logged in user or search for user id based on username"
   ([settings]
     (:id (me settings)))

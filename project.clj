@@ -9,6 +9,12 @@
                    [cheshire "5.2.0"]
                   [com.soundcloud/java-api-wrapper "1.3.1"]
                 [ring/ring-servlet "1.2.0-RC1"]
+                 [uk.ac.wlv.sentistrength/sentistrength "0.0"]
   ]
+  :plugins [
+            [lein-localrepo "0.4.0"]
+            [lein-light "0.0.4"]
+            ]
+
   :main sciencefair.core
 )
