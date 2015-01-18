@@ -31,7 +31,7 @@
 (defn harvestTracks 
   [howmany pagesize genres kees ]
   (let [conn (mg/connect) db (mg/get-db conn "monger-test")]
-    (doseq [i (range 1 howmany)]
+    (doseq [i (range 1 (+ 1 howmany))]
       (mc/insert-batch db "documents" (useful-format-tracks (pull-down-tracks-genres genres pagesize (* pagesize (- i 1)) ) kees))
     )
   ))
@@ -44,6 +44,6 @@
     ;(map #(% :id) (mc/find-maps db "documents"))
       ;(mc/remove db "documents")
   )
-  (harvestTracks 3 10 '("Hip Hop" "hiphop")  [:id :genre :bpm :description :user_id :download_count ] )
-
+  (harvestTracks 1 10 '("Hip Hop" "hiphop")  [:id :genre :bpm :description :user_id :download_count ] )
 )
+
