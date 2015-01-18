@@ -164,7 +164,6 @@ balk*	-2	General Inquirer Feb 2010
 baloney	-2	Feb-11
 banal*	-2	General Inquirer Feb 2010
 bandit*	-2	General Inquirer Feb 2010
-banger*	3	General Inquirer Feb 2010
 bane	-2	General Inquirer Feb 2010
 banish*	-2	General Inquirer Feb 2010
 bankrupt*	-3	General Inquirer Feb 2010
@@ -704,7 +703,6 @@ dolt	-2	Feb-11
 dominate*	-2	General Inquirer Feb 2010
 domination	-2	General Inquirer Feb 2010
 doom*	-2	
-dope*	3	General Inquirer Feb 2010
 dork*	-3	
 doubt*	-2	
 douchebag*	-2	Feb-11
@@ -1958,7 +1956,7 @@ shrivel*	-2	General Inquirer Feb 2010
 shroud*	-2	General Inquirer Feb 2010
 shun*	-2	General Inquirer Feb 2010
 shy*	-3	
-sick	2	General Inquirer Feb 2010
+sick	-2	General Inquirer Feb 2010
 sicken*	-4	
 sickly	-2	General Inquirer Feb 2010
 sickness	-2	General Inquirer Feb 2010

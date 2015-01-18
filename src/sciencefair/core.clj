@@ -10,36 +10,37 @@
  [items attr]
  (map #(% attr) items))
 
+(defn ey [a] 
+  (map type a))
+
+
 (defn get-comments
  "Takes a list or vector of ids and returns a map of ids to comments"
- [ids]
- (let [comments {}]
-        (map #(assoc comments % (get-attrs (tracks settings {} % "comments") :body)) ids)
-  )
-)
+ [id]
+  (->>
+    (tracks settings {} id "comments")
+    (map #(select-keys % '(:body :user_id)))
+  ))
+
 (defn analyze-sentiment
  [a]
  (println "hey")
- 1.0
- )
+ 1.0)
+
 (defn sentize
  [comments]
  (let [sentized {}]
         (map #(assoc sentized (first %) (map analyze-sentiment (second %)))
-         comments)
- ))
-" For genre sentiment
-        download them all with sampling search take only ids using get-attrs
-        get-comments
-        run sentiment store values
-        ----
-        genre
-        followers"
+         comments)))
 
+(defn pull-down-tracks-genres [genres pagesize offset]
+  (mapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset}) genres))
+
+(defn useful-format-tracks [tracks kees]
+  (map #(assoc (select-keys % kees) :comments (get-comments (% :id))) tracks)
+  )
 (defn -main
   "I don't do a whole lot."
   [& args]
-  (get-attrs (tracks settings {"genres" "Hip Hop" "order" "created_at" "limit" "1"}) :id)
-  ;(println (sentize (get-comments '(123504279 61278329 142285485))))
-  ;(println (map #(% :body) (tracks settings (str 167444670) "comments")))
+  (first (useful-format-tracks (pull-down-tracks-genres '("Hip Hop" "hiphop") 1 0) [:id :genre :bpm :description :user_id]))
 )

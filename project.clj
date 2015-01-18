@@ -10,10 +10,10 @@
                   [com.soundcloud/java-api-wrapper "1.3.1"]
                 [ring/ring-servlet "1.2.0-RC1"]
                  [uk.ac.wlv.sentistrength/sentistrength "0.0"]
+                 [fuzzy-string "0.1.2-SNAPSHOT"]
   ]
   :plugins [
-            [lein-localrepo "0.4.0"]
-            ]
+            [lein-localrepo "0.4.0"]]
 
   :main sciencefair.core
 )
