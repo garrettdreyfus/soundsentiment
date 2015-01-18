@@ -22,12 +22,6 @@
     (tracks settings {} id "comments")
     (map #(select-keys % '(:body :user_id)))))
 
-(defn sentize
- [comments]
- (let [sentized {}]
-        (map #(assoc sentized (first %) (map analyze-sentiment (second %)))
-         comments)))
-
 (defn pull-down-tracks-genres [genres pagesize offset]
   (mapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset,"created_at[to]" "2015-01-18 11:20:00"}) genres))
 
@@ -37,7 +31,7 @@
 (defn harvestTracks 
   [howmany pagesize genres kees ]
   (let [conn (mg/connect) db (mg/get-db conn "monger-test")]
-    (doseq [i (range howmany)]
+    (doseq [i (range 1 howmany)]
       (mc/insert-batch db "documents" (useful-format-tracks (pull-down-tracks-genres genres pagesize (* pagesize (- i 1)) ) kees))
     )
   ))
