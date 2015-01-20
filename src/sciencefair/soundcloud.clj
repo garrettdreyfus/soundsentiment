@@ -19,10 +19,16 @@
 
 
 (defn soundcloud [route params]
-  (->
-    (client/get (str "https://api.soundcloud.com" route ".json") {:query-params params} )
-    (:body)
-    (parse-string true)))
+  (try 
+    (->
+      (client/get (str "https://api.soundcloud.com" route ".json") {:query-params params} )
+      (:body)
+      (parse-string true))
+    (catch Exception e (do
+                         (Thread/sleep 200)
+                         (println e)
+                         (println route)))))
+
 (defn tracks
   ([settings params]
    (soundcloud "/tracks" (merge params {"client_id" (:client-id settings)}) ))

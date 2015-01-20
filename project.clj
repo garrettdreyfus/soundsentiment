@@ -12,6 +12,8 @@
                  [uk.ac.wlv.sentistrength/sentistrength "0.0"]
                  [fuzzy-string "0.1.2-SNAPSHOT"]
                  [com.novemberain/monger "2.0.0"]
+                 [org.clojure/tools.trace "0.7.5"]
+
   ]
   :plugins [
             [lein-localrepo "0.4.0"]]
