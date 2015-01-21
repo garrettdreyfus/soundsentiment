@@ -29,7 +29,7 @@
              doall))
 (defn pull-down-tracks-genres [genres pagesize offset]
   (print "__" pagesize offset "___\n")
-  (pmapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset "created_at[to]" "2015-01-19 09:40:00"}) genres))
+  (pmapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset "created_at[to]" "2014-05-01 09:40:00"}) genres))
 
 (defn useful-format-tracks [tracks kees]
   (map #(assoc (select-keys % kees) :comments (get-comments (% :id))) tracks))
@@ -48,6 +48,6 @@
 (defn -main
   [& args]
   (let [howmany 800 pagesize 10 start 0] 
-    (harvestTracks howmany pagesize start '("Electronic" "House" )  [:id :genre :bpm :description :user_id :download_count ] ))
+    (harvestTracks howmany pagesize start '("Hiphop" "hiphop" "jazz" "Electronic" "dubstep" "country" "rock" "rockandroll" "blues" "theblues")  [:id :genre :bpm :description :user_id :download_count ] ))
 )
 
