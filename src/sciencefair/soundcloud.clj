@@ -24,10 +24,9 @@
       (client/get (str "https://api.soundcloud.com" route ".json") {:query-params params} )
       (:body)
       (parse-string true))
-    (catch Exception e (do
-                         (Thread/sleep 200)
+    (catch Exception e (dorun
                          (println e)
-                         (println route)))))
+                         ))))
 
 (defn tracks
   ([settings params]
