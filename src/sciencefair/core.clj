@@ -32,11 +32,11 @@
 (defn pull-down-tracks-genres [genres pagesize offset date_to]
   (if 
     (< empties 10) 
-      (dorun (pmapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset "created_at[to]" date_to}) genres))))
+      (doall (pmapcat #(tracks settings {"genres" %, "order" "created_at", "limit" pagesize, "offset" offset "created_at[to]" date_to}) genres))))
 
 (defn useful-format-tracks [tracks kees]
-  (test/is (> (count tracks) 0))
-  (map #(assoc (select-keys % kees) :comments (get-comments (% :id))) tracks))
+  ;(test/is (> (count tracks) 0))
+  (pmap #(assoc (select-keys % kees) :comments (get-comments (% :id))) tracks))
 
 
 (defn insert-batch-nodups [batch]
