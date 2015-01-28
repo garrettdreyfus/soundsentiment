@@ -4,16 +4,12 @@
              [clj-http.client :as client]
              [fuzzy-string.core :as fuzzy]
              [cheshire.core :refer :all]
-             [sciencefair.core :refer :all]
              [clojure.string :refer [join]])
 
    (:gen-class)
   (:import [uk.ac.wlv.sentistrength SentiStrength]))
 
 
-(def prepositions 
-  (str/split "about below in spite of regarding above beneath instead of  since according to  beside  into  through across  between like  throughout after beyond  near  to against but of  toward along by  off under amid  concerning  on  underneath among down  on account of until around  during  onto  up at  except  out upon atop  for out of  with because of  from  outside within before  in  over  without behind  inside  past" #"\s")
-  )
 (defn parse-int [s]
      (Integer. (re-find  #"\d+" s )))
 
@@ -39,17 +35,20 @@
 
 (defn averageArrays
   [arr]
-  [
-    (/ (reduce + (map first arr)) (count arr))
-    (/ (reduce + (map second arr)) (count arr))
-  ])
+    (if (> (count arr ) 0)
+      [(/ (reduce + (map first arr)) (count arr))
+      (/ (reduce + (map second arr)) (count arr))]
+      0))
 
 (defn std-dev [samples]
-    (let [n (count samples)
-            mean (/ (reduce + samples) n)
-            intermediate (map #(Math/pow (- %1 mean) 2) samples)]
-              (Math/sqrt 
-                     (/ (reduce + intermediate) n))))    
+    (if (> (count samples) 0) 
+        (let [n (count samples)
+              mean (/ (reduce + samples) n)
+              intermediate (map #(Math/pow (- %1 mean) 2) samples)]
+                (Math/sqrt 
+                       (/ (reduce + intermediate) n))) 
+        0))    
+
 (defn std-devArrays
  [arr] 
   [(std-dev (map first arr)) (std-dev (map second arr))] )
@@ -68,6 +67,5 @@
   [word]
   (map #(map parse-int (scoreText %)) (getDefinitions word)))
 
-(fuzzy/levenshtein "bangers" "bangerz")
-(averageArrays (smartAverage (wordSentiment "sick") 1))
-(averageArrays (wordSentiment "hot") )
+;(fuzzy/levenshtein "bangers" "bangerz")
+;(averageArrays (wordSentiment "hot") )
