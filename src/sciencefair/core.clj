@@ -142,6 +142,7 @@
 
 (defn -main
   [& args]
-  ;(make-heat-map (mc/find-maps rt/db "end_data" {:version version}))
-  (rt/words-to-file (mq/sort (mc/find-maps rt/db "words") (array-map :word 1)))
+  ;(dorun (collect-scores))
+  ;(reduce-scores)
+  (make-heat-map (mc/find-maps rt/db "end_data" {:version version}))
 )
