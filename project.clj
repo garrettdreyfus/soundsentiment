@@ -13,10 +13,15 @@
                  [fuzzy-string "0.1.2-SNAPSHOT"]
                  [com.novemberain/monger "2.0.0"]
                  [org.clojure/tools.trace "0.7.5"]
+                 [incanter "1.2.3-SNAPSHOT"]
+                 [org.clojure/math.numeric-tower "0.0.4"]
+
 
   ]
   :plugins [
             [lein-localrepo "0.4.0"]]
 
   :main sciencefair.core
+  :jvm-opts ["-Xmx1G"] ;; or more
+
 )

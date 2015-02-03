@@ -2,7 +2,7 @@
    (:require [sciencefair.soundcloud :refer :all]
              [clojure.string :as str ]
              [clj-http.client :as client]
-             [fuzzy-string.core :as fuzzy]
+            [fuzzy-string.core :as fuzzy]
              [cheshire.core :refer :all]
              [clojure.string :refer [join]])
 
@@ -67,5 +67,4 @@
   [word]
   (map #(map parse-int (scoreText %)) (getDefinitions word)))
 
-;(fuzzy/levenshtein "bangers" "bangerz")
 ;(averageArrays (wordSentiment "hot") )
