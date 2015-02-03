@@ -6,6 +6,7 @@
     [sciencefair.retrain :as rt ]
     [sciencefair.sentiment :refer :all]
     [fuzzy-string.core :as fuzzy]
+    [monger.query :as mq]
     [incanter.core :refer :all]
     [incanter.charts :refer :all]
     [clojure.math.numeric-tower :as math])
@@ -14,7 +15,7 @@
     [com.mongodb MongoOptions ServerAddress]
     [org.bson.types ObjectId] [com.mongodb DB WriteConcern]))
 
-(def version "1.0")
+(def version "1.1")
 
 (def genres ["hiphop" "jazz" "electronic" "dubstep" "country" "rock" "blues"])
 
@@ -100,7 +101,7 @@
 
 (defn store-track-sentiscore
   [track]  
-  (let [data (hash-map :score (ready-map-for-mongo (track-scores track)) :genre (closest-genre (track :genre) genres) :id (track :id))]
+  (let [data (hash-map :score (ready-map-for-mongo (track-scores track)) :genre (closest-genre (track :genre) genres) :id (track :id) :version version)]
     (mc/insert rt/db "scores" data)
     0))
 
@@ -141,4 +142,6 @@
 
 (defn -main
   [& args]
-  (make-heat-map (mc/find-maps rt/db "end_data")))
+  ;(make-heat-map (mc/find-maps rt/db "end_data" {:version version}))
+  (rt/words-to-file (mq/sort (mc/find-maps rt/db "words") (array-map :word 1)))
+)

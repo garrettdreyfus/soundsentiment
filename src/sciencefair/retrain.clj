@@ -7,6 +7,7 @@
                 [clojure.java.io :as io]
                 [monger.collection :as mc]
                 [monger.search :as ms]
+                [monger.query :as mq]
                 [monger.operators :refer :all]
                 [fuzzy-string.core :as fuzzy]
                 [monger.conversion :refer [from-db-object]])
@@ -134,7 +135,14 @@
   ([taken]
     (dorun (pmap #(update-word (% :word)) (take taken (mc/find-maps db "words"))))))
 
-
+(defn words-to-file
+  [words]
+  (with-open [wrtr (io/writer "EmotionLookupTable.txt")]
+    (doseq [word words]
+      (.write wrtr (str (word :word) " " (word :score) "\n"))
+    )
+  )
+)
 
 
 
