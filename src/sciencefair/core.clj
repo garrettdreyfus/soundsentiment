@@ -15,7 +15,7 @@
     [com.mongodb MongoOptions ServerAddress]
     [org.bson.types ObjectId] [com.mongodb DB WriteConcern]))
 
-(def version "1.1")
+(def version "1.0")
 
 (def genres ["hiphop" "jazz" "electronic" "dubstep" "country" "rock" "blues"])
 
@@ -131,18 +131,37 @@
 (def temp (back-to-map { "14"  60, "27"  8, "31"  97, "11"  10, "10"  41, "21"  17, "23"  1, "13"  2572, "26"  21, "16"  18, "7"  2496, "8"  202, "22"  10, "25"  885, "9"  97, "20"  78, "32"  2, "28"  5, "19"  2048, "15"  22, "33"  1 }))
 
 (defn make-heat-map 
-  [objs]
-  (for [data objs]
+  [objs] 
+  (doseq [data objs]
     (save 
       (heat-map 
         (partial tile-function (back-to-map (data :score))) 
-        0 5 0 5 
-        :y-label "Negativity" :x-label "Positivity" :title (data :genre))
+        1 5 1 5 
+        :y-label "Negativity" :x-label "Positivity" :title (data :genre) :z-label "Number of Comments")
     (str (data :genre ) ".png"))))
+
+(defn sum-score
+  [data]
+  (reduce merge (for [sum (range -5 6)]
+    {sum (reduce + (vals (select-keys data (filter #(= sum (reduce - %)) (keys data)))))}
+    )))
+
+;(sum-score {[1 0] 5 [3 2] 6 [2 3] 5})
+
+(defn score-histogram 
+  [objs] 
+  (doseq [dat objs]
+   (let [data (sum-score (back-to-map (dat :score)))] 
+      (save
+        (bar-chart (keys data) (vals data)) 
+      )
+    )))
 
 (defn -main
   [& args]
   ;(dorun (collect-scores))
   ;(reduce-scores)
-  (make-heat-map (mc/find-maps rt/db "end_data" {:version version}))
+  ;(make-heat-map (mc/find-maps rt/db "end_data" {:version version}))
+  ;(score-histogram (mc/find-maps rt/db "end_data" {:version version}))
+  (mc/find-maps rt/db "end_data" {:version version})
 )
